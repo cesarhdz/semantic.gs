@@ -9,6 +9,9 @@
 @column-width: 60;
 @gutter-width: 20;
 @columns: 12;
+// In mobiles four columns are good enough
+@columns-mob: 4;
+@mobile-threshold:726px;
 
 // Utility variable — you should never need to modify this
 @gridsystem-width: (@column-width*@columns) + (@gutter-width*@columns) * @grid-units;
@@ -51,14 +54,33 @@ body {
 	// *width: @total-width*((@gutter-width + @gridsystem-width)/@gridsystem-width)-@correction;
 	// *margin: 0 @total-width*(((@gutter-width*.5)/@gridsystem-width)*-1)-@correction;
 	.clearfix;
+
+	/*
+	 * Add constraint to delete margin and with in mobiles
+	 */ 
+	@media (max-width : @mobile-threshold){
+		margin-left:0;
+		max-width:100%;
+	}
 }
-.column(@x,@columns:@columns) {
+.column(@x,@columns:@columns,@total-width:@total-width) {
 	display: inline;
 	float: left;
 	width: @total-width*((((@gutter-width+@column-width)*@x)-@gutter-width) / @gridsystem-width);
 	margin: 0 @total-width*((@gutter-width*.5)/@gridsystem-width);
 	// *width: @total-width*((((@gutter-width+@column-width)*@x)-@gutter-width) / @gridsystem-width)-@correction;
 	// *margin: 0 @total-width*((@gutter-width*.5)/@gridsystem-width)-@correction;
+}
+
+/*
+ * Column-mob make easier to declare columns for mobiles
+ * This solution doesn't follow mobile-first approach but make the 
+ * grid backwardcompatible
+ */ 
+.column_mob(@x:4,@columns:@columns-mob){
+	@media (max-width : @mobile-threshold){
+		.column(@x,@columns,100%);
+	}
 }
 .push(@offset:1) {
 	margin-left: @total-width*(((@gutter-width+@column-width)*@offset) / @gridsystem-width) + @total-width*((@gutter-width*.5)/@gridsystem-width);
