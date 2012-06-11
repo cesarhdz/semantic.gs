@@ -2,13 +2,16 @@
 // Semantic.gs // for LESS: http://lesscss.org/
 /////////////////
 
+// Use of ems or pixel units
+@grid-units: 1px;
+
 // Defaults which you can freely override
 @column-width: 60;
 @gutter-width: 20;
 @columns: 12;
 
 // Utility variable — you should never need to modify this
-@gridsystem-width: (@column-width*@columns) + (@gutter-width*@columns) * 1px;
+@gridsystem-width: (@column-width*@columns) + (@gutter-width*@columns) * @grid-units;
 
 // Set @total-width to 100% for a fluid layout
 @total-width: @gridsystem-width;
